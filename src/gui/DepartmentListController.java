@@ -47,7 +47,8 @@ public class DepartmentListController implements Initializable{
 	@FXML
 	public void onBtNewAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		createDialogForm("/gui/DepartmentForm.fxml", parentStage);;
+		Department obj = new Department();
+		createDialogForm(obj, "/gui/DepartmentForm.fxml", parentStage);;
 	}
 	
 	public void setDepartmentService(DepartmentService service) {
@@ -78,10 +79,14 @@ public class DepartmentListController implements Initializable{
 		tableViewDepartment.setItems(obsList);
 	}
 	
-	private void createDialogForm(String pathname, Stage parentStage) {
+	private void createDialogForm(Department obj, String pathname, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(pathname));
 			Pane pane = loader.load();
+			
+			DepartmentFormController controller = loader.getController();    //referência do controlador
+			controller.setDepartment(obj);
+			controller.updateFormData();      //carrega os dados do obj no formulário
 			
 			//Para carregar uma janela modal em outra tem que instanciar outro Stage
 			Stage dialogStage = new Stage();
