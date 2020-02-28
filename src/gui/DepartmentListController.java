@@ -86,6 +86,7 @@ public class DepartmentListController implements Initializable{
 			
 			DepartmentFormController controller = loader.getController();    //referência do controlador
 			controller.setDepartment(obj);
+			controller.setDepartmentService(new DepartmentService());
 			controller.updateFormData();      //carrega os dados do obj no formulário
 			
 			//Para carregar uma janela modal em outra tem que instanciar outro Stage
