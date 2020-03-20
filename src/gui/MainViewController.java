@@ -17,6 +17,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import model.services.DepartmentService;
+import model.services.SellerService;
 
 public class MainViewController implements Initializable {
 
@@ -31,7 +32,11 @@ public class MainViewController implements Initializable {
 
 	@FXML
 	public void onMenuItemSellerAction() {
-		System.out.println("onMenuItemSellerAction");
+		loadView("/gui/SellerList.fxml", (SellerListController controller) -> { // função de inicialização como
+			// parâmetro. janela com ação
+			controller.setSellerService(new SellerService());
+			controller.updateTableView();
+		});
 	}
 
 	@FXML
@@ -45,7 +50,7 @@ public class MainViewController implements Initializable {
 
 	@FXML
 	public void onMenuItemAboutAction() {
-		loadView("/gui/About.fxml", x -> {            //parâmetro de janela sem ação
+		loadView("/gui/About.fxml", x -> { // parâmetro de janela sem ação
 		});
 	}
 
@@ -67,8 +72,8 @@ public class MainViewController implements Initializable {
 			mainVBox.getChildren().clear();
 			mainVBox.getChildren().add(mainMenu);
 			mainVBox.getChildren().addAll(newVBox.getChildren());
-			
-			T controller = loader.getController();        //executa a função passada como argumento
+
+			T controller = loader.getController(); // executa a função passada como argumento
 			initializingAction.accept(controller);
 
 		} catch (IOException e) {
